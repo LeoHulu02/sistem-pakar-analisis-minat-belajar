@@ -481,9 +481,9 @@ Error:    text-xs text-error-500 mt-1
 Simpan di `.env.local` (tidak di-commit ke git):
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://ickfwovdyhrcnixvcpyr.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlja2Z3b3ZkeWhyY25peHZjcHlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2MTkxMTQsImV4cCI6MjA5NjE5NTExNH0.81xye5pyLcE4Qd7fq_E1hsnwncNUL3naEiV40fIwqpE
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
+NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-supabase-anon-key>
+SUPABASE_SERVICE_ROLE_KEY=<your-supabase-service-role-key>
 ```
 
 > `SUPABASE_SERVICE_ROLE_KEY` hanya digunakan di server-side (tidak expose ke client). Ambil dari Supabase dashboard → Project Settings → API.

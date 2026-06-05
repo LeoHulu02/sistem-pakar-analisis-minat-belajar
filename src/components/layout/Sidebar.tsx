@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  BarChart3,
   ClipboardList,
   Database,
   FileSpreadsheet,
@@ -74,15 +73,6 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="mx-2 mt-2 rounded-lg border border-slate-200 bg-slate-50 p-3">
-        <div className="mb-2 flex items-center gap-2 text-xs font-medium text-slate-700">
-          <BarChart3 className="h-3.5 w-3.5 text-primary-600" />
-          Status MVP
-        </div>
-        <p className="text-xs leading-relaxed text-slate-500">
-          Foundation app aktif. Modul data dan engine akan dibangun bertahap.
-        </p>
-      </div>
     </aside>
   );
 }

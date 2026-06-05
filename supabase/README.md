@@ -8,7 +8,7 @@ Jalankan file SQL dengan urutan berikut:
 Cara paling cepat:
 
 1. Buka Supabase Dashboard.
-2. Masuk ke project `ickfwovdyhrcnixvcpyr`.
+2. Masuk ke project Supabase yang dipakai aplikasi ini.
 3. Buka **SQL Editor**.
 4. Paste isi migration, jalankan sampai sukses.
 5. Paste isi seed, jalankan sampai sukses.
