@@ -24,7 +24,7 @@ export async function Topbar() {
   })();
 
   return (
-    <header className="sticky top-0 z-30 flex h-12 items-center justify-between border-b border-slate-200 bg-white px-4 lg:px-6">
+    <header className="sticky top-0 z-30 flex h-12 items-center justify-between border-b border-primary-100 bg-primary-50/80 px-4 backdrop-blur lg:border-slate-200 lg:bg-white lg:px-6 lg:backdrop-blur-none">
       <div>
         <p className="text-sm font-semibold text-slate-950">Dashboard</p>
         <p className="text-xs text-slate-500">
@@ -43,7 +43,7 @@ export async function Topbar() {
         </div>
         <form action={logoutAction}>
           <SubmitButton
-            className="h-8 rounded-md border border-slate-200 bg-white px-3 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
+            className="h-8 rounded-md border border-red-200 bg-red-50 px-3 text-sm font-medium text-red-600 transition hover:border-red-300 hover:bg-red-100"
             pendingText="Keluar..."
           >
             Keluar
