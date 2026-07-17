@@ -112,7 +112,7 @@ export default async function RulesPage({ searchParams }: RulesPageProps) {
             Forward Chaining Rules
           </h1>
           <p className="text-xs text-slate-500">
-            Kelola knowledge base yang menghubungkan gejala dengan kesimpulan
+            Kelola knowledge base yang menghubungkan mata pelajaran dengan kesimpulan
             minat belajar.
           </p>
         </div>
@@ -196,7 +196,7 @@ export default async function RulesPage({ searchParams }: RulesPageProps) {
       {modal === "create" ? (
         <CrudModal
           title="Tambah Rule FC"
-          description="Hubungkan beberapa gejala dengan satu kesimpulan minat belajar."
+          description="Hubungkan beberapa mata pelajaran dengan satu kesimpulan minat belajar."
           closeHref={closeHref}
           size="xl"
         >
@@ -213,7 +213,7 @@ export default async function RulesPage({ searchParams }: RulesPageProps) {
       {modal === "edit" && selectedRule ? (
         <CrudModal
           title="Edit Rule FC"
-          description="Perbarui rule, bobot, status, dan premis gejala."
+          description="Perbarui rule, bobot, status, dan premis mata pelajaran."
           closeHref={closeHref}
           size="xl"
         >

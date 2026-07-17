@@ -40,7 +40,7 @@ export function RuleTable({
           Belum ada rule Forward Chaining
         </h2>
         <p className="mt-1 text-sm text-slate-500">
-          Tambahkan rule pertama untuk menghubungkan gejala dengan kesimpulan.
+          Tambahkan rule pertama untuk menghubungkan mata pelajaran dengan kesimpulan.
         </p>
         <Link
           href={buildModalPath(basePath, searchParams, "create")}
@@ -61,7 +61,7 @@ export function RuleTable({
               <th className="px-3 py-2 font-medium">Kode</th>
               <th className="px-3 py-2 font-medium">Rule</th>
               <th className="px-3 py-2 font-medium">Kesimpulan</th>
-              <th className="px-3 py-2 font-medium">Gejala</th>
+              <th className="px-3 py-2 font-medium">Mata Pelajaran</th>
               <th className="px-3 py-2 font-medium">Bobot</th>
               <th className="px-3 py-2 font-medium">Status</th>
               <th className="px-3 py-2 text-right font-medium">Aksi</th>
@@ -155,7 +155,7 @@ export function RuleTable({
                 </p>
               </div>
               <div>
-                <p className="text-xs text-slate-500">Gejala</p>
+                <p className="text-xs text-slate-500">Mata Pelajaran</p>
                 <p className="font-medium text-slate-700">
                   {item.gejala_count}
                 </p>

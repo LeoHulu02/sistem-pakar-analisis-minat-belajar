@@ -19,7 +19,7 @@ const navItems = [
   { href: "/siswa", label: "Siswa", icon: Users },
   { href: "/konsultasi/new", label: "Konsultasi", icon: ClipboardList },
   { href: "/laporan", label: "Laporan", icon: FileText },
-  { href: "/admin/gejala", label: "Gejala", icon: ListChecks },
+  { href: "/admin/gejala", label: "Mata Pelajaran", icon: ListChecks },
   { href: "/admin/rules", label: "Rules", icon: Database },
   { href: "/admin/dataset", label: "Dataset", icon: FileSpreadsheet },
   { href: "/admin/comparison", label: "Komparasi", icon: GitCompare },

@@ -33,16 +33,16 @@ export function GejalaTable({
     return (
       <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center">
         <h2 className="text-sm font-semibold text-slate-950">
-          Belum ada gejala
+          Belum ada mata pelajaran
         </h2>
         <p className="mt-1 text-sm text-slate-500">
-          Tambahkan gejala pertama untuk menyusun kuesioner dan rule FC.
+          Tambahkan mata pelajaran pertama untuk menyusun kuesioner dan rule FC.
         </p>
         <Link
           href={buildModalPath(basePath, searchParams, "create")}
           className="mt-4 inline-flex h-8 items-center rounded-md bg-primary-600 px-3 text-sm font-medium text-white hover:bg-primary-700"
         >
-          Tambah Gejala
+          Tambah Mata Pelajaran
         </Link>
       </div>
     );

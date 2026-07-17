@@ -36,10 +36,10 @@ export function GejalaForm({
       {!isModal ? (
         <div className="border-b border-slate-200 px-4 py-3">
           <h1 className="text-lg font-semibold tracking-tight text-slate-950">
-            {isEdit ? "Edit Gejala" : "Tambah Gejala"}
+            {isEdit ? "Edit Mata Pelajaran" : "Tambah Mata Pelajaran"}
           </h1>
           <p className="text-sm text-slate-500">
-            Gejala akan digunakan sebagai pertanyaan kuesioner dan premis rule FC.
+            Mata pelajaran akan digunakan sebagai pertanyaan kuesioner dan premis rule FC.
           </p>
         </div>
       ) : null}
@@ -125,7 +125,7 @@ export function GejalaForm({
           className="h-8 rounded-md bg-primary-600 px-3 text-sm font-medium text-white hover:bg-primary-700"
           pendingText={isEdit ? "Menyimpan..." : "Menambahkan..."}
         >
-          {isEdit ? "Simpan Perubahan" : "Tambah Gejala"}
+          {isEdit ? "Simpan Perubahan" : "Tambah Mata Pelajaran"}
         </SubmitButton>
       </div>
     </form>

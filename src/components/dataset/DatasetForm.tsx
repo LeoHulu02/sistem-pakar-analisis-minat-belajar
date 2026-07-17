@@ -114,21 +114,21 @@ export function DatasetForm({
           <div className="mb-2 flex items-center justify-between gap-3">
             <div>
               <h2 className="text-sm font-semibold text-slate-950">
-                Fitur Gejala
+                Fitur Mata Pelajaran
               </h2>
               <p className="text-xs text-slate-500">
-                Centang gejala yang bernilai true untuk data training ini.
+                Centang mata pelajaran yang bernilai true untuk data training ini.
               </p>
             </div>
             <span className="rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">
-              {gejala.length} gejala
+              {gejala.length} mata pelajaran
             </span>
           </div>
 
           <div className="max-h-96 overflow-y-auto rounded-lg border border-slate-200">
             {gejala.length === 0 ? (
               <div className="p-4 text-sm text-slate-500">
-                Belum ada gejala. Tambahkan gejala terlebih dahulu.
+                Belum ada mata pelajaran. Tambahkan mata pelajaran terlebih dahulu.
               </div>
             ) : (
               <div className="divide-y divide-slate-100">

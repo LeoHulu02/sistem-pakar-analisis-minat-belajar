@@ -88,7 +88,7 @@ export default async function GejalaPage({ searchParams }: GejalaPageProps) {
             Admin
           </p>
           <h1 className="text-lg font-semibold tracking-tight text-slate-950">
-            Master Gejala
+            Master Pelajaran
           </h1>
           <p className="text-xs text-slate-500">
             Kelola daftar pertanyaan yang digunakan untuk kuesioner dan premis
@@ -99,7 +99,7 @@ export default async function GejalaPage({ searchParams }: GejalaPageProps) {
           href={buildModalPath("/admin/gejala", listSearchParams, "create")}
           className="inline-flex h-8 items-center justify-center rounded-md bg-primary-600 px-3 text-sm font-medium text-white hover:bg-primary-700"
         >
-          Tambah Gejala
+          Tambah Mata Pelajaran
         </Link>
       </div>
 
@@ -147,7 +147,7 @@ export default async function GejalaPage({ searchParams }: GejalaPageProps) {
 
       {error ? (
         <div className="rounded-lg border border-error-100 bg-error-100 p-4 text-sm text-error-500">
-          Gagal memuat gejala: {error.message}. Pastikan migration Supabase
+          Gagal memuat mata pelajaran: {error.message}. Pastikan migration Supabase
           sudah dijalankan.
         </div>
       ) : (
@@ -174,7 +174,7 @@ export default async function GejalaPage({ searchParams }: GejalaPageProps) {
 
       {modal === "create" ? (
         <CrudModal
-          title="Tambah Gejala"
+          title="Tambah Mata Pelajaran"
           description="Tambahkan pertanyaan kuesioner dan premis rule FC."
           closeHref={closeHref}
         >
@@ -189,8 +189,8 @@ export default async function GejalaPage({ searchParams }: GejalaPageProps) {
 
       {modal === "edit" && selectedGejala ? (
         <CrudModal
-          title="Edit Gejala"
-          description="Perbarui kode, kategori, deskripsi, dan status gejala."
+          title="Edit Mata Pelajaran"
+          description="Perbarui kode, kategori, deskripsi, dan status mata pelajaran."
           closeHref={closeHref}
         >
           <GejalaForm
@@ -205,15 +205,15 @@ export default async function GejalaPage({ searchParams }: GejalaPageProps) {
 
       {modal === "delete" && selectedGejala ? (
         <CrudModal
-          title="Hapus Gejala"
-          description="Konfirmasi sebelum gejala dihapus dari knowledge base."
+          title="Hapus Mata Pelajaran"
+          description="Konfirmasi sebelum mata pelajaran dihapus dari knowledge base."
           closeHref={closeHref}
           size="md"
         >
           <DeleteConfirmForm
             id={selectedGejala.id}
             name={`${selectedGejala.kode} - ${selectedGejala.deskripsi}`}
-            entityLabel="gejala"
+            entityLabel="mata pelajaran"
             cancelHref={closeHref}
             returnTo={closeHref}
             action={deleteGejalaAction}

@@ -259,7 +259,7 @@ export default async function HasilKonsultasiPage({ params }: HasilPageProps) {
               Rule yang Terpenuhi
             </h2>
             <p className="text-xs text-slate-500">
-              Daftar rule FC yang semua premis gejalanya cocok.
+              Daftar rule FC yang semua premis mata pelajarannya cocok.
             </p>
           </div>
 
@@ -280,7 +280,7 @@ export default async function HasilKonsultasiPage({ params }: HasilPageProps) {
                         <tr>
                           <th className="px-3 py-2 font-medium">Rule</th>
                           <th className="px-3 py-2 font-medium">Kesimpulan</th>
-                          <th className="px-3 py-2 font-medium">Gejala Cocok</th>
+                          <th className="px-3 py-2 font-medium">Mata Pelajaran Cocok</th>
                           <th className="px-3 py-2 font-medium">Skor</th>
                         </tr>
                       </thead>
@@ -313,7 +313,7 @@ export default async function HasilKonsultasiPage({ params }: HasilPageProps) {
                 </div>
               ) : (
                 <p className="text-center text-sm text-slate-500">
-                  Belum ada rule yang gejalanya cocok sebagian.
+                  Belum ada rule yang mata pelajarannya cocok sebagian.
                 </p>
               )}
             </div>
@@ -324,7 +324,7 @@ export default async function HasilKonsultasiPage({ params }: HasilPageProps) {
                   <tr>
                     <th className="px-4 py-2 font-medium">Rule</th>
                     <th className="px-4 py-2 font-medium">Kesimpulan</th>
-                    <th className="px-4 py-2 font-medium">Gejala Match</th>
+                    <th className="px-4 py-2 font-medium">Mata Pelajaran Match</th>
                     <th className="px-4 py-2 font-medium">Confidence</th>
                   </tr>
                 </thead>
@@ -386,7 +386,7 @@ export default async function HasilKonsultasiPage({ params }: HasilPageProps) {
           </div>
           <div className="bg-white p-3">
             <h2 className="text-sm font-semibold text-slate-950">
-              Gejala Dipilih
+              Mata Pelajaran Dipilih
             </h2>
             <div className="mt-3 space-y-2">
               {(gejala ?? []).map((item) => (

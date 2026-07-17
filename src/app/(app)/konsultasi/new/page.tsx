@@ -50,7 +50,7 @@ export default async function NewKonsultasiPage({
             Konsultasi Baru
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            Pilih siswa dan gejala yang sesuai. Sistem akan menjalankan Forward
+            Pilih siswa dan mata pelajaran yang sesuai. Sistem akan menjalankan Forward
             Chaining dan ID3 secara server-side.
           </p>
         </div>
@@ -96,7 +96,7 @@ export default async function NewKonsultasiPage({
             <div className="mb-2 flex items-center justify-between gap-3">
               <div>
                 <h2 className="text-sm font-semibold text-slate-950">
-                  Gejala Terpilih
+                  Mata Pelajaran Terpilih
                 </h2>
                 <p className="text-xs text-slate-500">
                   Centang semua pernyataan yang sesuai dengan siswa.

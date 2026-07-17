@@ -45,7 +45,7 @@ export function RuleForm({
             {isEdit ? "Edit Rule FC" : "Tambah Rule FC"}
           </h1>
           <p className="text-sm text-slate-500">
-            Rule menghubungkan kumpulan gejala dengan kesimpulan minat belajar.
+            Rule menghubungkan kumpulan mata pelajaran dengan kesimpulan minat belajar.
           </p>
         </div>
       ) : null}
@@ -145,21 +145,21 @@ export function RuleForm({
           <div className="mb-2 flex items-center justify-between gap-3">
             <div>
               <h2 className="text-sm font-semibold text-slate-950">
-                Premis Gejala
+                Premis Mata Pelajaran
               </h2>
               <p className="text-xs text-slate-500">
-                Pilih minimal satu gejala yang harus terpenuhi untuk rule ini.
+                Pilih minimal satu mata pelajaran yang harus terpenuhi untuk rule ini.
               </p>
             </div>
             <span className="rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">
-              {gejala.length} gejala
+              {gejala.length} mata pelajaran
             </span>
           </div>
 
           <div className="max-h-80 overflow-y-auto rounded-lg border border-slate-200">
             {gejala.length === 0 ? (
               <div className="p-4 text-sm text-slate-500">
-                Belum ada gejala. Tambahkan gejala terlebih dahulu.
+                Belum ada mata pelajaran. Tambahkan mata pelajaran terlebih dahulu.
               </div>
             ) : (
               <div className="divide-y divide-slate-100">
