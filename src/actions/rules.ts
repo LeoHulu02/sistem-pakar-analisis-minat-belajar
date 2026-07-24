@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { formatDatabaseError } from "@/lib/utils/error";
 
 function getRequiredString(formData: FormData, key: string) {
   const value = String(formData.get(key) ?? "").trim();
@@ -87,13 +88,18 @@ export async function createRuleAction(formData: FormData) {
     );
   }
 
-  const payload = {
-    kode_rule: getRequiredString(formData, "kode_rule").toUpperCase(),
-    nama_rule: getRequiredString(formData, "nama_rule"),
-    kesimpulan: getRequiredString(formData, "kesimpulan"),
-    bobot: getBobot(formData),
-    aktif: getCheckboxValue(formData, "aktif"),
-  };
+  let payload;
+  try {
+    payload = {
+      kode_rule: getRequiredString(formData, "kode_rule").toUpperCase(),
+      nama_rule: getRequiredString(formData, "nama_rule"),
+      kesimpulan: getRequiredString(formData, "kesimpulan"),
+      bobot: getBobot(formData),
+      aktif: getCheckboxValue(formData, "aktif"),
+    };
+  } catch (err) {
+    redirectWithError(returnTo, formatDatabaseError(err));
+  }
 
   const supabase = createClient();
   const { data, error } = await supabase
@@ -105,7 +111,7 @@ export async function createRuleAction(formData: FormData) {
   if (error || !data) {
     redirectWithError(
       returnTo,
-      error?.message ?? "Rule gagal disimpan",
+      formatDatabaseError(error, "Rule gagal disimpan"),
     );
   }
 
@@ -113,7 +119,7 @@ export async function createRuleAction(formData: FormData) {
 
   if (mappingError) {
     await supabase.from("rules_fc").delete().eq("id", data.id);
-    redirectWithError(returnTo, mappingError.message);
+    redirectWithError(returnTo, formatDatabaseError(mappingError));
   }
 
   revalidatePath("/admin/rules");
@@ -121,7 +127,6 @@ export async function createRuleAction(formData: FormData) {
 }
 
 export async function updateRuleAction(formData: FormData) {
-  const id = getRequiredString(formData, "id");
   const returnTo = getReturnPath(formData, "/admin/rules");
   const gejalaIds = getGejalaIds(formData);
 
@@ -132,25 +137,32 @@ export async function updateRuleAction(formData: FormData) {
     );
   }
 
-  const payload = {
-    kode_rule: getRequiredString(formData, "kode_rule").toUpperCase(),
-    nama_rule: getRequiredString(formData, "nama_rule"),
-    kesimpulan: getRequiredString(formData, "kesimpulan"),
-    bobot: getBobot(formData),
-    aktif: getCheckboxValue(formData, "aktif"),
-  };
+  let id = "";
+  let payload;
+  try {
+    id = getRequiredString(formData, "id");
+    payload = {
+      kode_rule: getRequiredString(formData, "kode_rule").toUpperCase(),
+      nama_rule: getRequiredString(formData, "nama_rule"),
+      kesimpulan: getRequiredString(formData, "kesimpulan"),
+      bobot: getBobot(formData),
+      aktif: getCheckboxValue(formData, "aktif"),
+    };
+  } catch (err) {
+    redirectWithError(returnTo, formatDatabaseError(err));
+  }
 
   const supabase = createClient();
   const { error } = await supabase.from("rules_fc").update(payload).eq("id", id);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   const mappingError = await replaceRuleGejala(id, gejalaIds);
 
   if (mappingError) {
-    redirectWithError(returnTo, mappingError.message);
+    redirectWithError(returnTo, formatDatabaseError(mappingError));
   }
 
   revalidatePath("/admin/rules");
@@ -168,7 +180,7 @@ export async function toggleRuleAction(formData: FormData) {
     .eq("id", id);
 
   if (error) {
-    redirectWithError("/admin/rules", error.message);
+    redirectWithError("/admin/rules", formatDatabaseError(error));
   }
 
   revalidatePath("/admin/rules");
@@ -181,7 +193,7 @@ export async function deleteRuleAction(formData: FormData) {
   const { error } = await supabase.from("rules_fc").delete().eq("id", id);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   revalidatePath("/admin/rules");

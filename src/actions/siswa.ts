@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { formatDatabaseError } from "@/lib/utils/error";
 import type { JenisKelamin } from "@/types/database";
 
 function getRequiredString(formData: FormData, key: string) {
@@ -43,13 +44,18 @@ function getReturnPath(formData: FormData, fallback: string) {
 
 export async function createSiswaAction(formData: FormData) {
   const returnTo = getReturnPath(formData, "/siswa");
-  const payload = {
-    nis: getRequiredString(formData, "nis"),
-    nama: getRequiredString(formData, "nama"),
-    kelas: getRequiredString(formData, "kelas"),
-    tahun_ajaran: getRequiredString(formData, "tahun_ajaran"),
-    jenis_kelamin: getOptionalJenisKelamin(formData),
-  };
+  let payload;
+  try {
+    payload = {
+      nis: getRequiredString(formData, "nis"),
+      nama: getRequiredString(formData, "nama"),
+      kelas: getRequiredString(formData, "kelas"),
+      tahun_ajaran: getRequiredString(formData, "tahun_ajaran"),
+      jenis_kelamin: getOptionalJenisKelamin(formData),
+    };
+  } catch (err) {
+    redirectWithError(returnTo, formatDatabaseError(err));
+  }
 
   const supabase = createClient();
   const { data, error } = await supabase
@@ -61,7 +67,7 @@ export async function createSiswaAction(formData: FormData) {
   if (error || !data) {
     redirectWithError(
       returnTo,
-      error?.message ?? "Data siswa gagal disimpan",
+      formatDatabaseError(error, "Data siswa gagal disimpan"),
     );
   }
 
@@ -70,21 +76,32 @@ export async function createSiswaAction(formData: FormData) {
 }
 
 export async function updateSiswaAction(formData: FormData) {
-  const id = getRequiredString(formData, "id");
-  const returnTo = getReturnPath(formData, `/siswa/${id}`);
-  const payload = {
-    nis: getRequiredString(formData, "nis"),
-    nama: getRequiredString(formData, "nama"),
-    kelas: getRequiredString(formData, "kelas"),
-    tahun_ajaran: getRequiredString(formData, "tahun_ajaran"),
-    jenis_kelamin: getOptionalJenisKelamin(formData),
-  };
+  let id = "";
+  let payload;
+  const rawReturnTo = String(formData.get("return_to") ?? "").trim();
+  let returnTo = rawReturnTo.startsWith("/") && !rawReturnTo.startsWith("//") ? rawReturnTo : "/siswa";
+
+  try {
+    id = getRequiredString(formData, "id");
+    if (!rawReturnTo) {
+      returnTo = `/siswa/${id}`;
+    }
+    payload = {
+      nis: getRequiredString(formData, "nis"),
+      nama: getRequiredString(formData, "nama"),
+      kelas: getRequiredString(formData, "kelas"),
+      tahun_ajaran: getRequiredString(formData, "tahun_ajaran"),
+      jenis_kelamin: getOptionalJenisKelamin(formData),
+    };
+  } catch (err) {
+    redirectWithError(returnTo, formatDatabaseError(err));
+  }
 
   const supabase = createClient();
   const { error } = await supabase.from("siswa").update(payload).eq("id", id);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   revalidatePath("/siswa");
@@ -99,7 +116,7 @@ export async function deleteSiswaAction(formData: FormData) {
   const { error } = await supabase.from("siswa").delete().eq("id", id);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   revalidatePath("/siswa");

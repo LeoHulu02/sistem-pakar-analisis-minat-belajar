@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createDatasetAction, updateDatasetAction } from "@/actions/dataset";
+import { AlertBanner } from "@/components/layout/AlertBanner";
 import { SubmitButton } from "@/components/layout/SubmitButton";
 import type { Database, Json } from "@/types/database";
 
@@ -64,9 +65,10 @@ export function DatasetForm({
 
       <div className="grid gap-4 p-4">
         {error ? (
-          <div className="rounded-md border border-error-100 bg-error-100 px-3 py-2 text-sm text-error-500">
-            {error}
-          </div>
+          <AlertBanner
+            title={isEdit ? "Gagal Menyimpan Dataset" : "Gagal Menambahkan Dataset"}
+            message={error}
+          />
         ) : null}
 
         <div className="grid gap-4 md:grid-cols-[1fr_180px]">

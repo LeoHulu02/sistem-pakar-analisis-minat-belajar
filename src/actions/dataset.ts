@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { formatDatabaseError } from "@/lib/utils/error";
 import type { Json } from "@/types/database";
 
 function getRequiredString(formData: FormData, key: string) {
@@ -58,17 +59,22 @@ export async function createDatasetAction(formData: FormData) {
     );
   }
 
-  const payload = {
-    label: getRequiredString(formData, "label"),
-    tahun_ajaran: getOptionalString(formData, "tahun_ajaran"),
-    fitur: buildFiturJson(gejalaCodes),
-  };
+  let payload;
+  try {
+    payload = {
+      label: getRequiredString(formData, "label"),
+      tahun_ajaran: getOptionalString(formData, "tahun_ajaran"),
+      fitur: buildFiturJson(gejalaCodes),
+    };
+  } catch (err) {
+    redirectWithError(returnTo, formatDatabaseError(err));
+  }
 
   const supabase = createClient();
   const { error } = await supabase.from("dataset_id3").insert(payload);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   revalidatePath("/admin/dataset");
@@ -76,7 +82,6 @@ export async function createDatasetAction(formData: FormData) {
 }
 
 export async function updateDatasetAction(formData: FormData) {
-  const id = getRequiredString(formData, "id");
   const returnTo = getReturnPath(formData, "/admin/dataset");
   const gejalaCodes = getSelectedGejalaCodes(formData);
 
@@ -87,11 +92,18 @@ export async function updateDatasetAction(formData: FormData) {
     );
   }
 
-  const payload = {
-    label: getRequiredString(formData, "label"),
-    tahun_ajaran: getOptionalString(formData, "tahun_ajaran"),
-    fitur: buildFiturJson(gejalaCodes),
-  };
+  let id = "";
+  let payload;
+  try {
+    id = getRequiredString(formData, "id");
+    payload = {
+      label: getRequiredString(formData, "label"),
+      tahun_ajaran: getOptionalString(formData, "tahun_ajaran"),
+      fitur: buildFiturJson(gejalaCodes),
+    };
+  } catch (err) {
+    redirectWithError(returnTo, formatDatabaseError(err));
+  }
 
   const supabase = createClient();
   const { error } = await supabase
@@ -100,7 +112,7 @@ export async function updateDatasetAction(formData: FormData) {
     .eq("id", id);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   revalidatePath("/admin/dataset");
@@ -114,7 +126,7 @@ export async function deleteDatasetAction(formData: FormData) {
   const { error } = await supabase.from("dataset_id3").delete().eq("id", id);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   revalidatePath("/admin/dataset");

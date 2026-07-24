@@ -7,6 +7,7 @@ import { runForwardChaining } from "@/lib/engine/fc";
 import { buildTree, predict } from "@/lib/engine/id3";
 import type { DataPoint, ID3Output, RuleWithGejala } from "@/lib/engine/types";
 import { createClient } from "@/lib/supabase/server";
+import { formatDatabaseError } from "@/lib/utils/error";
 import type { Json } from "@/types/database";
 
 function getRequiredString(formData: FormData, key: string) {
@@ -142,7 +143,7 @@ export async function createKonsultasiAction(formData: FormData) {
   if (konsultasiError || !konsultasi) {
     redirectWithError(
       `/konsultasi/new?siswa_id=${siswaId}`,
-      konsultasiError?.message ?? "Konsultasi gagal dibuat",
+      formatDatabaseError(konsultasiError, "Konsultasi gagal dibuat"),
     );
   }
 
@@ -155,7 +156,7 @@ export async function createKonsultasiAction(formData: FormData) {
 
   if (gejalaError) {
     await supabase.from("konsultasi").delete().eq("id", konsultasi.id);
-    redirectWithError(`/konsultasi/new?siswa_id=${siswaId}`, gejalaError.message);
+    redirectWithError(`/konsultasi/new?siswa_id=${siswaId}`, formatDatabaseError(gejalaError));
   }
 
   try {

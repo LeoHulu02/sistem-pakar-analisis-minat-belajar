@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createRuleAction, updateRuleAction } from "@/actions/rules";
+import { AlertBanner } from "@/components/layout/AlertBanner";
 import { SubmitButton } from "@/components/layout/SubmitButton";
 import type { Database } from "@/types/database";
 
@@ -52,9 +53,10 @@ export function RuleForm({
 
       <div className="grid gap-4 p-4">
         {error ? (
-          <div className="rounded-md border border-error-100 bg-error-100 px-3 py-2 text-sm text-error-500">
-            {error}
-          </div>
+          <AlertBanner
+            title={isEdit ? "Gagal Menyimpan Rule" : "Gagal Menambahkan Rule"}
+            message={error}
+          />
         ) : null}
 
         <div className="grid gap-4 md:grid-cols-[160px_1fr]">

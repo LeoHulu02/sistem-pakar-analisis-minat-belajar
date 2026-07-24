@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { formatDatabaseError } from "@/lib/utils/error";
 
 function getRequiredString(formData: FormData, key: string) {
   const value = String(formData.get(key) ?? "").trim();
@@ -41,18 +42,23 @@ function getReturnPath(formData: FormData, fallback: string) {
 
 export async function createGejalaAction(formData: FormData) {
   const returnTo = getReturnPath(formData, "/admin/gejala");
-  const payload = {
-    kode: getRequiredString(formData, "kode").toUpperCase(),
-    deskripsi: getRequiredString(formData, "deskripsi"),
-    kategori: getOptionalString(formData, "kategori"),
-    aktif: getCheckboxValue(formData, "aktif"),
-  };
+  let payload;
+  try {
+    payload = {
+      kode: getRequiredString(formData, "kode").toUpperCase(),
+      deskripsi: getRequiredString(formData, "deskripsi"),
+      kategori: getOptionalString(formData, "kategori"),
+      aktif: getCheckboxValue(formData, "aktif"),
+    };
+  } catch (err) {
+    redirectWithError(returnTo, formatDatabaseError(err));
+  }
 
   const supabase = createClient();
   const { error } = await supabase.from("gejala").insert(payload);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   revalidatePath("/admin/gejala");
@@ -60,20 +66,26 @@ export async function createGejalaAction(formData: FormData) {
 }
 
 export async function updateGejalaAction(formData: FormData) {
-  const id = getRequiredString(formData, "id");
   const returnTo = getReturnPath(formData, "/admin/gejala");
-  const payload = {
-    kode: getRequiredString(formData, "kode").toUpperCase(),
-    deskripsi: getRequiredString(formData, "deskripsi"),
-    kategori: getOptionalString(formData, "kategori"),
-    aktif: getCheckboxValue(formData, "aktif"),
-  };
+  let id = "";
+  let payload;
+  try {
+    id = getRequiredString(formData, "id");
+    payload = {
+      kode: getRequiredString(formData, "kode").toUpperCase(),
+      deskripsi: getRequiredString(formData, "deskripsi"),
+      kategori: getOptionalString(formData, "kategori"),
+      aktif: getCheckboxValue(formData, "aktif"),
+    };
+  } catch (err) {
+    redirectWithError(returnTo, formatDatabaseError(err));
+  }
 
   const supabase = createClient();
   const { error } = await supabase.from("gejala").update(payload).eq("id", id);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   revalidatePath("/admin/gejala");
@@ -88,7 +100,7 @@ export async function toggleGejalaAction(formData: FormData) {
   const { error } = await supabase.from("gejala").update({ aktif }).eq("id", id);
 
   if (error) {
-    redirectWithError("/admin/gejala", error.message);
+    redirectWithError("/admin/gejala", formatDatabaseError(error));
   }
 
   revalidatePath("/admin/gejala");
@@ -101,7 +113,7 @@ export async function deleteGejalaAction(formData: FormData) {
   const { error } = await supabase.from("gejala").delete().eq("id", id);
 
   if (error) {
-    redirectWithError(returnTo, error.message);
+    redirectWithError(returnTo, formatDatabaseError(error));
   }
 
   revalidatePath("/admin/gejala");

@@ -1,4 +1,5 @@
 import { createKonsultasiAction } from "@/actions/konsultasi";
+import { AlertBanner } from "@/components/layout/AlertBanner";
 import { SubmitButton } from "@/components/layout/SubmitButton";
 import { createClient } from "@/lib/supabase/server";
 
@@ -57,9 +58,10 @@ export default async function NewKonsultasiPage({
 
         <div className="space-y-4 p-4">
           {searchParams?.error ? (
-            <div className="rounded-md border border-error-100 bg-error-100 px-3 py-2 text-sm text-error-500">
-              {searchParams.error}
-            </div>
+            <AlertBanner
+              title="Konsultasi Gagal Dijalankan"
+              message={searchParams.error}
+            />
           ) : null}
 
           {siswaError || gejalaError ? (
